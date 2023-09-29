@@ -1,2 +1,3 @@
-# bit-01
-proyecto
+-Titulo del proyecto
+-Descipcion
+-Autor

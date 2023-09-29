@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const server = express();
-const port = 4000;
+const port = process.env.PORT;
 
 server.set("port",port)
 
