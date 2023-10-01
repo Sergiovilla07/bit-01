@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const user = require("../models/userModels");
-// const getToken = require("../tools/gets");
+const getToken = require("../tools/gets");
 
 const usersController = {
   createUser: async (request, response) => {
@@ -13,9 +13,9 @@ const usersController = {
         password: hashPassword,
       });
       const userCreate = await newUser.save();
-      response.json({messge:`success! user created with id ${userCreate._id}`})
-    //   const token = await getToken({id:userCreate._id, name:userCreate.name });
-    //   response.json(token);
+    //   response.json({messge:`success! user created with id ${userCreate._id}`})
+      const token = await getToken({id:userCreate._id, name:userCreate.name });
+      response.json(token);
       
     } catch (error) {
         response.json({messge:'FALLO CREAR USUARIO ID'})
