@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const user = require("../models/userModels");
 const getToken = require("../tools/gets");
+const userModels = require("../models/userModels");
 
 const usersController = {
   createUser: async (request, response) => {
@@ -21,17 +22,50 @@ const usersController = {
         response.json({messge:'FALLO CREAR USUARIO ID'})
     }
   },
-  readAllusers: (request, response) => {
-    response.json({ messge: "createall..." });
+  readAllusers: async (request, response) => {
+    try {
+        const allUsers = await userModels.find()
+        response.json({allUsers})
+    } catch (error) {
+        response.json({messge:'FALLO CREAR TODOS LOS USUARIOS'})
+    }
   },
-  readUser: (request, response) => {
-    response.json({ messge: "createreaduser..." });
+  readUser: async (request, response) => {
+    try {
+        const user = await userModels.findById(request.params.id);
+        if (user) {
+            response.json({user});
+        } else {
+            throw new Error("user not found")
+        }
+    } catch (error) {
+        response.json({messge: error.messge || 'FALLO CREAR UN USUARIO' })
+    }
   },
-  updateUser: (request, response) => {
-    response.json({ messge: "create update..." });
+  updateUser: async (request, response) => {
+    try {
+        const userUpdated = await userModels.findByIdAndUpdate(request.params.id, request.body)
+        if (userUpdated) {
+            response.json({userUpdated: userUpdated._id});
+        } else {
+            throw new Error("user not found")
+        }
+    } catch (error) {
+        response.json({messge: error.messge || 'FALLO ACTUALIZAR UN USUARIO' })
+    }
   },
-  deleteUser: (request, response) => {
-    response.json({ messge: "create delete..." });
+  deleteUser: async (request, response) => {
+    try {
+        const userDeleted = await userModels.findByIdAndDelete(request.params.id)
+        if (userDeleted) {
+            // response.json({userDeleted});
+            response.json({userDeleted: userDeleted._id});
+        } else {
+            throw new Error("user not found")
+        }
+    } catch (error) {
+        response.json({messge: error.messge || 'FALLO EN ELIMINAR UN USUARIO' })
+    }
   },
 };
 module.exports = usersController;
