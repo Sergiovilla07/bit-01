@@ -10,6 +10,7 @@ server.set("port",port)
 
 //miderwords
 server.use(morgan('dev'));
+server.use(express.json());
 
 
 server.get("/", (request,response) => {
