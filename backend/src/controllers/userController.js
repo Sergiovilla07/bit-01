@@ -6,16 +6,22 @@ const userModels = require("../models/userModels");
 const usersController = {
   createUser: async (request, response) => {
     try {
-      const { name, email, Password } = request.body;
+      const { capitan, entrenador, year, ciudad, estadio, presidente, equipo, email, Password } = request.body;
       const hashPassword = await bcrypt.hash("password ", 10);
       const newUser = new user({
-        name,
+        equipo,
+        estadio,
+        entrenador,
+        capitan,
+        ciudad,
+        year,
+        presidente,
         email,
         password: hashPassword,
       });
       const userCreate = await newUser.save();
     //   response.json({messge:`success! user created with id ${userCreate._id}`})
-      const token = await getToken({id:userCreate._id, name:userCreate.name });
+      const token = await getToken({id:userCreate._id, equipo:userCreate.name });
       response.json(token);
       
     } catch (error) {
@@ -36,7 +42,7 @@ const usersController = {
         if (user) {
             response.json({user});
         } else {
-            throw new Error("user not found")
+            throw new Error("No se encontro el usuario")
         }
     } catch (error) {
         response.json({messge: error.messge || 'FALLO CREAR UN USUARIO' })
@@ -48,7 +54,7 @@ const usersController = {
         if (userUpdated) {
             response.json({userUpdated: userUpdated._id});
         } else {
-            throw new Error("user not found")
+            throw new Error("No se encontro el usuario")
         }
     } catch (error) {
         response.json({messge: error.messge || 'FALLO ACTUALIZAR UN USUARIO' })
@@ -61,7 +67,7 @@ const usersController = {
             // response.json({userDeleted});
             response.json({userDeleted: userDeleted._id});
         } else {
-            throw new Error("user not found")
+            throw new Error("No se encontro el usuario")
         }
     } catch (error) {
         response.json({messge: error.messge || 'FALLO EN ELIMINAR UN USUARIO' })

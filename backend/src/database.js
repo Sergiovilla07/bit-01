@@ -1,5 +1,5 @@
 const mongose =require("mongoose")
 
 mongose.connect(process.env.MONG_DB)
-.then((db) => console.log("Bien, conectado a la base de datos"))
-.catch((err)=>console.log("Error, no se conceto a la base de datos"))
+.then((db) => console.log("Estamos conectados melos"))
+.catch((err)=>console.log("lo siento pero la conexion no esta mela"))

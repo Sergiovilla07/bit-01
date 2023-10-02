@@ -7,5 +7,5 @@ const port = server.get("port")
 
 
 server.listen(port, () =>{
-    console.log("server running on port" ,port)
+    console.log("Servidor corriendo en el puerto:" ,port)
 })
